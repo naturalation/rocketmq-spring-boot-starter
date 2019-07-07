@@ -31,8 +31,13 @@ public class AspectUtils {
 		byte[] body = ByteUtils.objectToByte(proceed);
 //
 		RocketMessage rocketMessage = method.getDeclaringClass().getAnnotation(RocketMessage.class);
+
+		String shardingValue = "~";
+		if (proceedingJoinPoint.getArgs().length > 0) {
+			shardingValue = proceedingJoinPoint.getArgs()[0].toString();
+		}
 //
-		ThreadPoolExecutorExecution.statsThread(threadPoolExecutor, new SendMessageFactoryExecution(consumerContainer,rocketMessage,annotation, rocketProperties, body));
+		ThreadPoolExecutorExecution.statsThread(threadPoolExecutor, new SendMessageFactoryExecution(consumerContainer,rocketMessage,annotation, rocketProperties, body, shardingValue));
 		return proceed;
 	}
 }

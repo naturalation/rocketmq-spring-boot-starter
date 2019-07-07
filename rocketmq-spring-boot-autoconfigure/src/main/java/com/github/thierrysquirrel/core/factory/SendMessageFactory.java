@@ -28,9 +28,9 @@ public class SendMessageFactory {
 
 	}
 
-	public static void sendMessage(OrderProducer orderProducer, OrderMessage orderMessage, RocketProperties rocketProperties, byte[] bytes) {
+	public static void sendMessage(OrderProducer orderProducer, OrderMessage orderMessage, RocketProperties rocketProperties, byte[] bytes, String shardingValue) {
 		Message message = MessageFactory.createMessage(orderMessage, bytes);
-		orderProducer.send(message, orderMessage.shardingKey());
+		orderProducer.send(message, orderMessage.shardingKey() + "-" + shardingValue);
 
 	}
 

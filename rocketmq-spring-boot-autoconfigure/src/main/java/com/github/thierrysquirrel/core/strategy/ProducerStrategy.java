@@ -23,7 +23,7 @@ import java.util.Map;
  * @since JDK 1.8
  */
 public class ProducerStrategy {
-	public static void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes) throws RocketException {
+	public static void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes, String shardingValue) throws RocketException {
 		if (message instanceof CommonMessage) {
 			CommonMessage commonMessage = (CommonMessage) message;
 			Producer producer = ProducerConsumerFactory.getProducer(consumerContainer, rocketMessage, commonMessage);
@@ -33,7 +33,7 @@ public class ProducerStrategy {
 		if (message instanceof OrderMessage) {
 			OrderMessage orderMessage = (OrderMessage) message;
 			OrderProducer orderProducer = ProducerConsumerFactory.getProducer(consumerContainer, rocketMessage, orderMessage);
-			SendMessageFactory.sendMessage(orderProducer, orderMessage, rocketProperties, bytes);
+			SendMessageFactory.sendMessage(orderProducer, orderMessage, rocketProperties, bytes, shardingValue);
 			return;
 		}
 		if (message instanceof TransactionMessage) {

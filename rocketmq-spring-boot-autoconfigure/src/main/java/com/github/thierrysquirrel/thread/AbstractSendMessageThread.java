@@ -21,13 +21,15 @@ public abstract class AbstractSendMessageThread implements Runnable {
 	private Object message;
 	private RocketProperties rocketProperties;
 	private byte[] bytes;
+	private String shardingValue;
 
-	public AbstractSendMessageThread(Map<String, Object> consumerContainer, RocketMessage rocketMessage,Object message, RocketProperties rocketProperties, byte[] bytes) {
+	public AbstractSendMessageThread(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes, String shardingValue) {
 		this.consumerContainer = consumerContainer;
 		this.rocketMessage=rocketMessage;
 		this.message = message;
 		this.rocketProperties = rocketProperties;
 		this.bytes = bytes;
+		this.shardingValue = shardingValue;
 	}
 
 	/**
@@ -38,7 +40,7 @@ public abstract class AbstractSendMessageThread implements Runnable {
 	 * @param rocketProperties rocketProperties
 	 * @param bytes            bytes
 	 */
-	protected abstract void statsSendMessage(Map<String, Object> consumerContainer,RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes);
+	protected abstract void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes, String shardingValue);
 
 	@Override
 	public void run() {
@@ -46,6 +48,7 @@ public abstract class AbstractSendMessageThread implements Runnable {
 				rocketMessage,
 				message,
 				rocketProperties,
-				bytes);
+				bytes,
+				shardingValue);
 	}
 }

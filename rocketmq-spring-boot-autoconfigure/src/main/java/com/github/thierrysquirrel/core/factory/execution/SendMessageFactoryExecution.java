@@ -21,8 +21,8 @@ import java.util.Map;
 public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 
 
-	public SendMessageFactoryExecution(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes) {
-		super(consumerContainer, rocketMessage, message, rocketProperties, bytes);
+	public SendMessageFactoryExecution(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes, String shardingValue) {
+		super(consumerContainer, rocketMessage, message, rocketProperties, bytes, shardingValue);
 	}
 
 	/**
@@ -35,9 +35,9 @@ public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 	 * @param bytes             bytes
 	 */
 	@Override
-	protected void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes) {
+	protected void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, RocketProperties rocketProperties, byte[] bytes, String shardingValue) {
 		try {
-			ProducerStrategy.statsSendMessage(consumerContainer,rocketMessage, message, rocketProperties, bytes);
+			ProducerStrategy.statsSendMessage(consumerContainer,rocketMessage, message, rocketProperties, bytes, shardingValue);
 		} catch (RocketException e) {
 			e.printStackTrace();
 		}
